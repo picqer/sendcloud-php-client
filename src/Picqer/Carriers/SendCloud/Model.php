@@ -129,7 +129,7 @@ abstract class Model {
     public function json()
     {
         $json = [];
-        $json[$this->namespace['single']] = $this->attributes;
+        $json[$this->namespaces['singular']] = $this->attributes;
         return json_encode($json);
     }
 

@@ -1,6 +1,7 @@
 <?php namespace Picqer\Carriers\SendCloud;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Response;
 
 class Connection {
@@ -77,6 +78,11 @@ class Connection {
         return $this->client;
     }
 
+    public function setDebug($handle)
+    {
+        $this->client()->setDefaultOption('debug', $handle);
+    }
+
     /**
      * Return the correct url for set environment
      *
@@ -104,7 +110,13 @@ class Connection {
         {
             $query->set($paramName, $paramValue);
         }
-        $result = $this->client()->send($request);
+
+        try {
+            $result = $this->client()->send($request);
+        } catch (RequestException $e) {
+            if ($e->hasResponse())
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
+        }
 
         return $this->parseResult($result);
     }
@@ -118,12 +130,11 @@ class Connection {
      */
     public function post($url, $body)
     {
-        try
-        {
-            $result = $this->client()->post($url, null, $body)->send();
-        } catch (\Exception $e)
-        {
-            throw new SendCloudApiException($e->getResponse()->getBody(true));
+        try {
+            $result = $this->client()->post($url, ['body' => $body]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse())
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
         }
 
         return $this->parseResult($result);
@@ -138,7 +149,12 @@ class Connection {
      */
     public function put($url, $body)
     {
-        $result = $this->client()->put($url, null, $body)->send();
+        try {
+            $result = $this->client()->put($url, ['body' => $body]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse())
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
+        }
 
         return $this->parseResult($result);
     }
@@ -151,7 +167,12 @@ class Connection {
      */
     public function delete($url)
     {
-        $result = $this->client()->delete($url)->send();
+        try {
+            $result = $this->client()->delete($url);
+        } catch (RequestException $e) {
+            if ($e->hasResponse())
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
+        }
 
         return $this->parseResult($result);
     }
