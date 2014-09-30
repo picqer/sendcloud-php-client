@@ -115,7 +115,7 @@ class Connection {
             $result = $this->client()->send($request);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
         }
 
         return $this->parseResult($result);
@@ -134,7 +134,7 @@ class Connection {
             $result = $this->client()->post($url, ['body' => $body]);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
         }
 
         return $this->parseResult($result);
@@ -153,7 +153,7 @@ class Connection {
             $result = $this->client()->put($url, ['body' => $body]);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
         }
 
         return $this->parseResult($result);
@@ -171,7 +171,7 @@ class Connection {
             $result = $this->client()->delete($url);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse()->json());
+                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
         }
 
         return $this->parseResult($result);
