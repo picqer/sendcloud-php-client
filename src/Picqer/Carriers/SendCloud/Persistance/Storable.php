@@ -5,7 +5,7 @@ trait Storable
     public function save()
     {
         if ($this->exists()) {
-            return $this->fill($this->update());
+            $this->fill($this->update());
         } else {
             $this->fill($this->insert());
         }
