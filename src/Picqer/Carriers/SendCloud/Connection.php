@@ -188,9 +188,12 @@ class Connection {
         {
             $json = $response->json();
 
-            if (array_key_exists('error', $json))
+            if (array_key_exists('error', $json)
+                && is_array($json['error'])
+                && array_key_exists('message', $json['error'])
+            )
             {
-                throw new SendCloudApiException('SendCloud error: ' . (string) $response->getBody());
+                throw new SendCloudApiException('SendCloud error: ' . $json['error']['message']);
             }
         } catch (\RuntimeException $e)
         {
