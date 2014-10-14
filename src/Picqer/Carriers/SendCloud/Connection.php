@@ -115,10 +115,12 @@ class Connection {
             $result = $this->client()->send($request);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
+                $this->parseResponse($e->getResponse());
+
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
         }
 
-        return $this->parseResult($result);
+        return $this->parseResponse($result);
     }
 
     /**
@@ -134,10 +136,12 @@ class Connection {
             $result = $this->client()->post($url, ['body' => $body]);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
+                $this->parseResponse($e->getResponse());
+
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
         }
 
-        return $this->parseResult($result);
+        return $this->parseResponse($result);
     }
 
     /**
@@ -153,10 +157,12 @@ class Connection {
             $result = $this->client()->put($url, ['body' => $body]);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
+                $this->parseResponse($e->getResponse());
+
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
         }
 
-        return $this->parseResult($result);
+        return $this->parseResponse($result);
     }
 
     /**
@@ -171,36 +177,36 @@ class Connection {
             $result = $this->client()->delete($url);
         } catch (RequestException $e) {
             if ($e->hasResponse())
-                throw new SendCloudApiException($e->getResponse()->getStatusCode() .': ' . $e->getResponse());
+                $this->parseResponse($e->getResponse());
+
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
         }
 
-        return $this->parseResult($result);
+        return $this->parseResponse($result);
     }
 
     /**
      * @param Response $response
-     * @return string Parsed JSON result
+     * @return array Parsed JSON result
      * @throws SendCloudApiException
      */
-    public function parseResult(Response $response)
+    public function parseResponse(Response $response)
     {
-        try
-        {
-            $json = $response->json();
+        try {
+            $resultArray = $response->json();
 
-            if (array_key_exists('error', $json)
-                && is_array($json['error'])
-                && array_key_exists('message', $json['error'])
+            if (array_key_exists('error', $resultArray)
+                && is_array($resultArray['error'])
+                && array_key_exists('message', $resultArray['error'])
             )
             {
-                throw new SendCloudApiException('SendCloud error: ' . $json['error']['message']);
+                throw new SendCloudApiException('SendCloud error: ' . $resultArray['error']['message']);
             }
-        } catch (\RuntimeException $e)
-        {
+
+            return $resultArray;
+        } catch (\RuntimeException $e) {
             throw new SendCloudApiException('SendCloud error: ' . $e->getMessage());
         }
-
-        return $json;
     }
 
     /**
