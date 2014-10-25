@@ -52,10 +52,10 @@ $parcel->save();
 Actions to the API may cause an Exception to be thrown in case something went wrong
 ```
 try
-    {
-        $parcel->save();
-    } catch (SendCloudApiException $e)
-    {
-        throw new Exception($e->getMessage());
-    }
+{
+    $parcel->save();
+} catch (SendCloudApiException $e)
+{
+    throw new Exception($e->getMessage());
+}
 ```
