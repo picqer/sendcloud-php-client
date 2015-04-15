@@ -8,7 +8,7 @@ This project can easily be installed through Composer.
 
 ```
   require: {
-    "picqer/sendcloud-php-client": "dev-master"
+    "picqer/sendcloud-php-client": "~v1.0"
   }
 ```
 
