@@ -2,7 +2,8 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 
 class Connection {
 
@@ -64,15 +65,13 @@ class Connection {
     {
         if ($this->client) return $this->client;
 
-
         $this->client = new Client([
-            'base_url' => $this->apiUrl()
-        ]);
-        $this->client->setDefaultOption('headers/Accept', 'application/json');
-        $this->client->setDefaultOption('headers/Content-Type', 'application/json');
-        $this->client->setDefaultOption('auth', [
-            $this->apiKey,
-            $this->apiSecret
+            'base_uri' => $this->apiUrl(),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ],
+            'auth' => [$this->apiKey, $this->apiSecret]
         ]);
 
         return $this->client;
@@ -80,7 +79,6 @@ class Connection {
 
     public function setDebug($handle)
     {
-        $this->client()->setDefaultOption('debug', $handle);
     }
 
     /**
@@ -96,23 +94,13 @@ class Connection {
     /**
      * Perform a GET request
      * @param string $url
-     * @param array $params
-     * @return string
+     * @return array
      * @throws SendCloudApiException
      */
-    public function get($url, array $params = [])
+    public function get($url)
     {
-        $request = $this->client()->createRequest('GET', $url);
-
-        $query = $request->getQuery();
-
-        foreach ($params as $paramName => $paramValue)
-        {
-            $query->set($paramName, $paramValue);
-        }
-
         try {
-            $result = $this->client()->send($request);
+            $result = $this->client()->get($url);
         } catch (RequestException $e) {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
@@ -193,7 +181,7 @@ class Connection {
     public function parseResponse(Response $response)
     {
         try {
-            $resultArray = $response->json();
+            $resultArray = json_decode($response->getBody()->getContents(), true);
 
             if (array_key_exists('error', $resultArray)
                 && is_array($resultArray['error'])
