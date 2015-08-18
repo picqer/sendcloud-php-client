@@ -183,6 +183,10 @@ class Connection {
         try {
             $resultArray = json_decode($response->getBody()->getContents(), true);
 
+            if (! is_array($resultArray)) {
+                throw new SendCloudApiException('SendCloud error: Unexpected result: ' . $response->getBody()->getContents());
+            }
+
             if (array_key_exists('error', $resultArray)
                 && is_array($resultArray['error'])
                 && array_key_exists('message', $resultArray['error'])
