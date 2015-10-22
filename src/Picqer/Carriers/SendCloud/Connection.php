@@ -2,7 +2,7 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 
 class Connection {
@@ -49,6 +49,13 @@ class Connection {
     private $client;
 
     /**
+     * Array of inserted middleWares
+     * @var array
+     */
+    protected $middleWares  = [];
+
+
+    /**
      * @param string $apiKey API key for SendCloud
      * @param string $apiSecret API secret for SendCloud
      */
@@ -65,20 +72,29 @@ class Connection {
     {
         if ($this->client) return $this->client;
 
-        $this->client = new Client([
+        $handlerStack = HandlerStack::create();
+        foreach ($this->middleWares as $middleWare) {
+            $handlerStack->push($middleWare);
+        }
+
+        $clientConfig = [
             'base_uri' => $this->apiUrl(),
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'
             ],
-            'auth' => [$this->apiKey, $this->apiSecret]
-        ]);
+            'auth' => [$this->apiKey, $this->apiSecret],
+            'handler' => $handlerStack
+        ];
+
+        $this->client = new Client($clientConfig);
 
         return $this->client;
     }
 
-    public function setDebug($handle)
+    public function insertMiddleWare($middleWare)
     {
+        $this->middleWares[] = $middleWare;
     }
 
     /**
@@ -181,10 +197,14 @@ class Connection {
     public function parseResponse(Response $response)
     {
         try {
-            $resultArray = json_decode($response->getBody()->getContents(), true);
+            // Rewind the response (middlewares might have read it already)
+            $response->getBody()->rewind();
+
+            $responseBody = $response->getBody()->getContents();
+            $resultArray = json_decode($responseBody, true);
 
             if (! is_array($resultArray)) {
-                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $response->getBody()->getContents()));
+                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody));
             }
 
             if (array_key_exists('error', $resultArray)
