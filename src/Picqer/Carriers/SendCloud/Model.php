@@ -136,4 +136,18 @@ abstract class Model {
         return json_encode($json);
     }
 
+    /**
+     * Make var_dump and print_r look pretty
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        $result = [];
+        foreach ($this->fillable as $attribute)
+        {
+            $result[$attribute] = $this->$attribute;
+        }
+        return $result;
+    }
 }
