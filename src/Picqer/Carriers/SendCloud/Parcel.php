@@ -48,7 +48,7 @@ class Parcel extends Model
                 return sprintf('http://track.bpost.be/btr/web/#/search?itemCode=%s&lang=en', $this->tracking_number);
                 break;
             case 'DHL':
-                return sprintf('https://www.dhlparcel%s/%s/track-trace?tt=%s', $this->country['iso_2'] == 'BE' ? 'be' : 'nl', 'EN', $this->tracking_number);
+                return sprintf('https://www.dhlparcel.%s/%s/track-trace?tt=%s', $this->country['iso_2'] == 'BE' ? 'be' : 'nl', 'EN', $this->tracking_number);
                 break;
             case 'DHL Germany':
                 return sprintf('https://nolp.dhl.de/nextt-online-public/set_identcodes.do?runtime=standalone&idc=%s', $this->tracking_number);
