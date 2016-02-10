@@ -250,5 +250,22 @@ class Connection {
         $this->environment = $environment;
     }
 
+    /**
+     * Download a resource.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    public function download($url)
+    {
+        try {
+            $result = $this->client()->get($url);
+        } catch (RequestException $e) {
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+        }
+
+        return $result->getBody()->getContents();
+    }
 }
 
