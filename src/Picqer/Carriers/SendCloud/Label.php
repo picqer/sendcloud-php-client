@@ -16,4 +16,15 @@ class Label extends Model {
         'plural' => 'labels'
     ];
 
+    /**
+     * Returns the label content (PDF) in A6 format.
+     *
+     * @return string
+     */
+    public function labelPrinterContent()
+    {
+        $url = str_replace($this->connection->apiUrl(), '', $this->label_printer);
+
+        return $this->connection->download($url);
+    }
 }
