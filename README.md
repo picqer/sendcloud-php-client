@@ -7,7 +7,7 @@ An unofficial client for the SendCloud API. More info about SendCloud on http://
 This project can easily be installed through Composer.
 
 ```
-composer require picqer/moneybird-php-client
+composer require picqer/sendcloud-php-client
 ```
 
 ## Set-up connection
