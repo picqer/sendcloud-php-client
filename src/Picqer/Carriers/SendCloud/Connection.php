@@ -262,7 +262,7 @@ class Connection {
         try {
             $result = $this->client()->get($url);
         } catch (RequestException $e) {
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: ' . $e->getMessage());
         }
 
         return $result->getBody()->getContents();
