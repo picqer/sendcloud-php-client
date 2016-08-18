@@ -12,25 +12,25 @@ composer require picqer/sendcloud-php-client
 
 ## Set-up connection
 Prepare the client for connecting to SendCloud with your API key and secret
-```
+```php
 $connection = new \Picqer\Carriers\SendCloud\Connection('apikey', 'apisecret');
 $sendCloud = new \Picqer\Carriers\SendCloud\SendCloud($connection);
 ```
 
 ## Get all parcels
 Returns an array of Parcel objects
-```
+```php
 $parcels = $sendCloud->parcels()->all();
 ```
 
 ## Get a single parcel
 Returns a Parcel object
-```
+```php
 $parcel = $sendCloud->parcels()->find(2342);
 ```
 
 ## Create a new parcel
-```
+```php
 $parcel = $sendCloud->parcels();
 
 $parcel->name = 'John Smith';
@@ -48,7 +48,7 @@ $parcel->save();
 
 ## Exceptions
 Actions to the API may cause an Exception to be thrown in case something went wrong
-```
+```php
 try
 {
     $parcel->save();
