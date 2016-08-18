@@ -20,7 +20,8 @@ class Parcel extends Model
         'shipment',
         'requestShipment',
         'order_number',
-        'tracking_number'
+        'tracking_number',
+        'weight'
     ];
 
     protected $url = 'parcels';
