@@ -8,25 +8,11 @@ use GuzzleHttp\Psr7\Response;
 class Connection {
 
     /**
-     * Holds the API url for live requests
-     *
-     * @var string
-     */
-    private $testUrl = 'http://demo.sendcloud.nl/api/v2/';
-
-    /**
      * Holds the API url for test requests
      *
      * @var string
      */
-    private $liveUrl = 'https://panel.sendcloud.nl/api/v2/';
-
-    /**
-     * The environment we work in
-     *
-     * @var string
-     */
-    private $environment = 'live';
+    private $apiUrl = 'https://panel.sendcloud.nl/api/v2/';
 
     /**
      * The API key
@@ -104,7 +90,7 @@ class Connection {
      */
     public function apiUrl()
     {
-        return $this->environment == 'live' ? $this->liveUrl : $this->testUrl;
+        return $this->apiUrl;
     }
 
     /**
@@ -240,8 +226,7 @@ class Connection {
     public function setEnvironment($environment)
     {
         $allowedEnvironments = [
-            'live',
-            'test'
+            'live'
         ];
 
         if (! in_array($environment, $allowedEnvironments))
