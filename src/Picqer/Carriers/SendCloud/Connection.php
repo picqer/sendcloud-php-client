@@ -210,29 +210,26 @@ class Connection {
     /**
      * Returns the selected environment
      *
+     * @deprecated
      * @return string
      */
     public function getEnvironment()
     {
-        return $this->environment;
+        return 'live';
     }
 
     /**
      * Set the environment for the client
      *
+     * @deprecated
      * @param string $environment
      * @throws SendCloudApiException
      */
     public function setEnvironment($environment)
     {
-        $allowedEnvironments = [
-            'live'
-        ];
-
-        if (! in_array($environment, $allowedEnvironments))
-            throw new SendCloudApiException('Selected environment not in allowed environments');
-
-        $this->environment = $environment;
+        if ( $environment === 'test' ) {
+            throw new SendCloudApiException('SendCloud test environment is no longer available');
+        }
     }
 
     /**
