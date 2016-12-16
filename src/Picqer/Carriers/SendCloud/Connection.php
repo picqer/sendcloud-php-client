@@ -236,8 +236,8 @@ class Connection {
      * Download a resource.
      *
      * @param string $url
-     *
      * @return string
+     * @throws SendCloudApiException
      */
     public function download($url)
     {
