@@ -76,5 +76,7 @@ class Parcel extends Model
                 return $shipper;
             }
         }
+
+        return null;
     }
 }

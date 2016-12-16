@@ -112,13 +112,15 @@ abstract class Model {
         {
             return $this->attributes[$key];
         }
+
+        return null;
     }
 
     public function __set($key, $value)
     {
         if ($this->isFillable($key))
         {
-            return $this->setAttribute($key, $value);
+            $this->setAttribute($key, $value);
         }
     }
 
