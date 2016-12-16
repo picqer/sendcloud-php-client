@@ -1,5 +1,28 @@
 <?php namespace Picqer\Carriers\SendCloud;
 
+/**
+ * Class Parcel
+ *
+ * @property integer id
+ * @property string  name
+ * @property string  company_name
+ * @property string  address
+ * @property array   address_divided
+ * @property string  city
+ * @property string  postal_code
+ * @property string  telephone
+ * @property string  email
+ * @property array   status
+ * @property array   data
+ * @property array   country
+ * @property array   shipment
+ * @property bool    requestShipment
+ * @property string  order_number
+ * @property string  tracking_number
+ * @property string  weight
+ *
+ * @package Picqer\Carriers\SendCloud
+ */
 class Parcel extends Model
 {
 

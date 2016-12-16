@@ -1,5 +1,14 @@
 <?php namespace Picqer\Carriers\SendCloud\Query;
 
+use Picqer\Carriers\SendCloud\Connection;
+
+/**
+ * Trait FindOne
+ *
+ * @method Connection connection()
+ *
+ * @package Picqer\Carriers\SendCloud\Persistance
+ */
 trait FindOne {
 
     public function find($id)
