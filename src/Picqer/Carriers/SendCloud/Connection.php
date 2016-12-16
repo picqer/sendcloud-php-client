@@ -3,7 +3,7 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 class Connection {
 
@@ -176,11 +176,11 @@ class Connection {
     }
 
     /**
-     * @param Response $response
+     * @param ResponseInterface $response
      * @return array Parsed JSON result
      * @throws SendCloudApiException
      */
-    public function parseResponse(Response $response)
+    public function parseResponse(ResponseInterface $response)
     {
         try {
             // Rewind the response (middlewares might have read it already)
