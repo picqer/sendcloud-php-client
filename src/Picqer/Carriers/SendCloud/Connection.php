@@ -107,7 +107,7 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
@@ -128,7 +128,7 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
@@ -149,7 +149,7 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
@@ -169,7 +169,7 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
@@ -190,7 +190,7 @@ class Connection {
             $resultArray = json_decode($responseBody, true);
 
             if (! is_array($resultArray)) {
-                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody));
+                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody), $response->getStatusCode());
             }
 
             if (array_key_exists('error', $resultArray)
@@ -198,7 +198,7 @@ class Connection {
                 && array_key_exists('message', $resultArray['error'])
             )
             {
-                throw new SendCloudApiException('SendCloud error: ' . $resultArray['error']['message']);
+                throw new SendCloudApiException('SendCloud error: ' . $resultArray['error']['message'], $resultArray['error']['code']);
             }
 
             return $resultArray;
@@ -244,7 +244,7 @@ class Connection {
         try {
             $result = $this->client()->get($url);
         } catch (RequestException $e) {
-            throw new SendCloudApiException('SendCloud error: ' . $e->getMessage());
+            throw new SendCloudApiException('SendCloud error: ' . $e->getMessage(), $e->getResponse()->getStatusCode());
         }
 
         return $result->getBody()->getContents();
