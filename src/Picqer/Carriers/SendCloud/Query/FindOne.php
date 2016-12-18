@@ -1,6 +1,7 @@
 <?php namespace Picqer\Carriers\SendCloud\Query;
 
 use Picqer\Carriers\SendCloud\Connection;
+use Picqer\Carriers\SendCloud\Model;
 
 /**
  * Trait FindOne
@@ -11,6 +12,10 @@ use Picqer\Carriers\SendCloud\Connection;
  */
 trait FindOne {
 
+    /**
+     * @param $id
+     * @return Model|FindOne
+     */
     public function find($id)
     {
         $result = $this->connection()->get($this->url . '/' . urlencode($id));
