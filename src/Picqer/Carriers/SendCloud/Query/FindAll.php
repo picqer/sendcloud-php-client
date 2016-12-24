@@ -1,5 +1,6 @@
-<?php namespace Picqer\Carriers\SendCloud\Query;
+<?php
 
+namespace Picqer\Carriers\SendCloud\Query;
 
 use Picqer\Carriers\SendCloud\Connection;
 
@@ -10,7 +11,8 @@ use Picqer\Carriers\SendCloud\Connection;
  *
  * @package Picqer\Carriers\SendCloud\Persistance
  */
-trait FindAll {
+trait FindAll
+{
 
     public function all()
     {
@@ -22,8 +24,8 @@ trait FindAll {
     public function collectionFromResult($result)
     {
         $collection = [];
-        foreach ($result[$this->namespaces['plural']] as $r)
-        {
+
+        foreach ($result[$this->namespaces['plural']] as $r) {
             $collection[] = new self($this->connection(), $r);
         }
 

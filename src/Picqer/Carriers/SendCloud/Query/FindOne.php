@@ -1,4 +1,6 @@
-<?php namespace Picqer\Carriers\SendCloud\Query;
+<?php
+
+namespace Picqer\Carriers\SendCloud\Query;
 
 use Picqer\Carriers\SendCloud\Connection;
 use Picqer\Carriers\SendCloud\Model;
@@ -10,7 +12,8 @@ use Picqer\Carriers\SendCloud\Model;
  *
  * @package Picqer\Carriers\SendCloud\Persistance
  */
-trait FindOne {
+trait FindOne
+{
 
     /**
      * @param $id
@@ -20,7 +23,7 @@ trait FindOne {
     {
         $result = $this->connection()->get($this->url . '/' . urlencode($id));
 
-        if (!array_key_exists($this->namespaces['singular'], $result)) {
+        if ( ! array_key_exists($this->namespaces['singular'], $result)) {
             return null;
         }
 

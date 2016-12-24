@@ -1,6 +1,9 @@
-<?php namespace Picqer\Carriers\SendCloud;
+<?php
 
-class SendCloud {
+namespace Picqer\Carriers\SendCloud;
+
+class SendCloud
+{
 
     /**
      * The HTTP connection

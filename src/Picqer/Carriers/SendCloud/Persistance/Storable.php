@@ -1,4 +1,6 @@
-<?php namespace Picqer\Carriers\SendCloud\Persistance;
+<?php
+
+namespace Picqer\Carriers\SendCloud\Persistance;
 
 use Picqer\Carriers\SendCloud\Connection;
 

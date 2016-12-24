@@ -3,6 +3,8 @@ SendCloud PHP API Client
 
 An unofficial client for the SendCloud API. More info about SendCloud on http://sendcloud.nl. Below are some examples on the usage of this client.
 
+Full docs of the SendCloud API can be found on https://docs.sendcloud.sc/api/v2/index.html
+
 ## Installation
 This project can easily be installed through Composer.
 
@@ -40,7 +42,7 @@ $parcel->city = 'Wellington';
 $parcel->postal_code = '3423 DD';
 $parcel->country = 'NL';
 $parcel->requestShipment = true;
-$parcel->shipment = 10; // Shipping method ($sendCloud->shippingMethods()->all())
+$parcel->shipment = 10; // Shipping method, get possibilities from $sendCloud->shippingMethods()->all()
 $parcel->order_number = 'ORDER2014-52321';
 
 $parcel->save();
@@ -49,11 +51,9 @@ $parcel->save();
 ## Exceptions
 Actions to the API may cause an Exception to be thrown in case something went wrong
 ```php
-try
-{
+try {
     $parcel->save();
-} catch (SendCloudApiException $e)
-{
+} catch (SendCloudApiException $e) {
     throw new Exception($e->getMessage());
 }
 ```

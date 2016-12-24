@@ -1,4 +1,6 @@
-<?php namespace Picqer\Carriers\SendCloud;
+<?php
+
+namespace Picqer\Carriers\SendCloud;
 
 /**
  * Class User
@@ -12,13 +14,14 @@
  * @property string email
  * @property string company_logo
  * @property string registered
- * @property array  data
- * @property array  modules
- * @property array  invoices
+ * @property array data
+ * @property array modules
+ * @property array invoices
  *
  * @package Picqer\Carriers\SendCloud
  */
-class User extends Model {
+class User extends Model
+{
 
     use Query\FindOne;
 

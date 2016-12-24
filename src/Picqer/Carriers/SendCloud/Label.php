@@ -1,4 +1,6 @@
-<?php namespace Picqer\Carriers\SendCloud;
+<?php
+
+namespace Picqer\Carriers\SendCloud;
 
 /**
  * Class Label
@@ -8,7 +10,8 @@
  *
  * @package Picqer\Carriers\SendCloud
  */
-class Label extends Model {
+class Label extends Model
+{
 
     use Query\FindOne;
 

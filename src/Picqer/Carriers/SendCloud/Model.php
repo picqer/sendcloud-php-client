@@ -1,6 +1,9 @@
-<?php namespace Picqer\Carriers\SendCloud;
+<?php
 
-abstract class Model {
+namespace Picqer\Carriers\SendCloud;
+
+abstract class Model
+{
 
     /**
      * @var Connection
@@ -71,10 +74,8 @@ abstract class Model {
         if (array_key_exists($this->namespaces['singular'], $attributes))
             $attributes = $attributes[$this->namespaces['singular']];
 
-        foreach ($this->fillableFromArray($attributes) as $key => $value)
-        {
-            if ($this->isFillable($key))
-            {
+        foreach ($this->fillableFromArray($attributes) as $key => $value) {
+            if ($this->isFillable($key)) {
                 $this->setAttribute($key, $value);
             }
         }
@@ -88,8 +89,7 @@ abstract class Model {
      */
     protected function fillableFromArray(array $attributes)
     {
-        if (count($this->fillable) > 0)
-        {
+        if (count($this->fillable) > 0) {
             return array_intersect_key($attributes, array_flip($this->fillable));
         }
 
@@ -108,8 +108,7 @@ abstract class Model {
 
     public function __get($key)
     {
-        if (isset($this->attributes[$key]))
-        {
+        if (isset($this->attributes[$key])) {
             return $this->attributes[$key];
         }
 
@@ -118,15 +117,14 @@ abstract class Model {
 
     public function __set($key, $value)
     {
-        if ($this->isFillable($key))
-        {
+        if ($this->isFillable($key)) {
             $this->setAttribute($key, $value);
         }
     }
 
     public function exists()
     {
-        if (! in_array($this->primaryKey, $this->attributes)) return false;
+        if ( ! in_array($this->primaryKey, $this->attributes)) return false;
 
         return ! empty($this->attributes[$this->primaryKey]);
     }
@@ -146,8 +144,7 @@ abstract class Model {
     public function __debugInfo()
     {
         $result = [];
-        foreach ($this->fillable as $attribute)
-        {
+        foreach ($this->fillable as $attribute) {
             $result[$attribute] = $this->$attribute;
         }
         return $result;

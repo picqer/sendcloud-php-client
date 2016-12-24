@@ -1,11 +1,14 @@
-<?php namespace Picqer\Carriers\SendCloud;
+<?php
+
+namespace Picqer\Carriers\SendCloud;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use Psr\Http\Message\ResponseInterface;
 
-class Connection {
+class Connection
+{
 
     /**
      * Holds the API url for test requests
@@ -38,7 +41,7 @@ class Connection {
      * Array of inserted middleWares
      * @var array
      */
-    protected $middleWares  = [];
+    protected $middleWares = [];
 
 
     /**
@@ -103,14 +106,14 @@ class Connection {
     {
         try {
             $result = $this->client()->get($url);
+            return $this->parseResponse($result);
         } catch (RequestException $e) {
-            if ($e->hasResponse())
+            if ($e->hasResponse()) {
                 $this->parseResponse($e->getResponse());
+            }
 
             throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
-
-        return $this->parseResponse($result);
     }
 
     /**
@@ -124,14 +127,14 @@ class Connection {
     {
         try {
             $result = $this->client()->post($url, ['body' => $body]);
+            return $this->parseResponse($result);
         } catch (RequestException $e) {
-            if ($e->hasResponse())
+            if ($e->hasResponse()) {
                 $this->parseResponse($e->getResponse());
+            }
 
             throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
-
-        return $this->parseResponse($result);
     }
 
     /**
@@ -145,14 +148,14 @@ class Connection {
     {
         try {
             $result = $this->client()->put($url, ['body' => $body]);
+            return $this->parseResponse($result);
         } catch (RequestException $e) {
-            if ($e->hasResponse())
+            if ($e->hasResponse()) {
                 $this->parseResponse($e->getResponse());
+            }
 
             throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
-
-        return $this->parseResponse($result);
     }
 
     /**
@@ -165,14 +168,14 @@ class Connection {
     {
         try {
             $result = $this->client()->delete($url);
+            return $this->parseResponse($result);
         } catch (RequestException $e) {
-            if ($e->hasResponse())
+            if ($e->hasResponse()) {
                 $this->parseResponse($e->getResponse());
+            }
 
             throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
-
-        return $this->parseResponse($result);
     }
 
     /**
@@ -189,15 +192,14 @@ class Connection {
             $responseBody = $response->getBody()->getContents();
             $resultArray = json_decode($responseBody, true);
 
-            if (! is_array($resultArray)) {
+            if ( ! is_array($resultArray)) {
                 throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody), $response->getStatusCode());
             }
 
             if (array_key_exists('error', $resultArray)
                 && is_array($resultArray['error'])
                 && array_key_exists('message', $resultArray['error'])
-            )
-            {
+            ) {
                 throw new SendCloudApiException('SendCloud error: ' . $resultArray['error']['message'], $resultArray['error']['code']);
             }
 
@@ -227,7 +229,7 @@ class Connection {
      */
     public function setEnvironment($environment)
     {
-        if ( $environment === 'test' ) {
+        if ($environment === 'test') {
             throw new SendCloudApiException('SendCloud test environment is no longer available');
         }
     }

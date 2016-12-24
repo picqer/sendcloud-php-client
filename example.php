@@ -11,4 +11,5 @@ $sendCloud = new \Picqer\Carriers\SendCloud\SendCloud($connection);
 
 // Do stuff
 $parcels = $sendCloud->parcels()->all();
+
 var_dump($parcels);

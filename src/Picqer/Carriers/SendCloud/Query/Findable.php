@@ -1,6 +1,9 @@
-<?php namespace Picqer\Carriers\SendCloud\Query;
+<?php
 
-trait Findable {
+namespace Picqer\Carriers\SendCloud\Query;
+
+trait Findable
+{
 
     use FindOne;
     use FindAll;
