@@ -3,7 +3,7 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 class Connection {
 
@@ -107,7 +107,7 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
@@ -128,7 +128,7 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
@@ -149,7 +149,7 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
@@ -169,18 +169,18 @@ class Connection {
             if ($e->hasResponse())
                 $this->parseResponse($e->getResponse());
 
-            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse());
+            throw new SendCloudApiException('SendCloud error: (no error message provided)' . $e->getResponse(), $e->getResponse()->getStatusCode());
         }
 
         return $this->parseResponse($result);
     }
 
     /**
-     * @param Response $response
+     * @param ResponseInterface $response
      * @return array Parsed JSON result
      * @throws SendCloudApiException
      */
-    public function parseResponse(Response $response)
+    public function parseResponse(ResponseInterface $response)
     {
         try {
             // Rewind the response (middlewares might have read it already)
@@ -190,7 +190,7 @@ class Connection {
             $resultArray = json_decode($responseBody, true);
 
             if (! is_array($resultArray)) {
-                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody));
+                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody), $response->getStatusCode());
             }
 
             if (array_key_exists('error', $resultArray)
@@ -198,7 +198,7 @@ class Connection {
                 && array_key_exists('message', $resultArray['error'])
             )
             {
-                throw new SendCloudApiException('SendCloud error: ' . $resultArray['error']['message']);
+                throw new SendCloudApiException('SendCloud error: ' . $resultArray['error']['message'], $resultArray['error']['code']);
             }
 
             return $resultArray;
@@ -236,15 +236,15 @@ class Connection {
      * Download a resource.
      *
      * @param string $url
-     *
      * @return string
+     * @throws SendCloudApiException
      */
     public function download($url)
     {
         try {
             $result = $this->client()->get($url);
         } catch (RequestException $e) {
-            throw new SendCloudApiException('SendCloud error: ' . $e->getMessage());
+            throw new SendCloudApiException('SendCloud error: ' . $e->getMessage(), $e->getResponse()->getStatusCode());
         }
 
         return $result->getBody()->getContents();

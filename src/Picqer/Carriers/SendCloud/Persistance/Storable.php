@@ -1,5 +1,14 @@
 <?php namespace Picqer\Carriers\SendCloud\Persistance;
 
+use Picqer\Carriers\SendCloud\Connection;
+
+/**
+ * Trait Storable
+ *
+ * @method Connection connection()
+ *
+ * @package Picqer\Carriers\SendCloud\Persistance
+ */
 trait Storable
 {
     public function save()

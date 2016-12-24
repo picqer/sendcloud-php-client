@@ -1,5 +1,15 @@
 <?php namespace Picqer\Carriers\SendCloud\Query;
 
+
+use Picqer\Carriers\SendCloud\Connection;
+
+/**
+ * Trait FindAll
+ *
+ * @method Connection connection()
+ *
+ * @package Picqer\Carriers\SendCloud\Persistance
+ */
 trait FindAll {
 
     public function all()

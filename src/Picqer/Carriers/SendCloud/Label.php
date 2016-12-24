@@ -1,5 +1,13 @@
 <?php namespace Picqer\Carriers\SendCloud;
 
+/**
+ * Class Label
+ *
+ * @property string[] $normal_printer
+ * @property string $label_printer
+ *
+ * @package Picqer\Carriers\SendCloud
+ */
 class Label extends Model {
 
     use Query\FindOne;
