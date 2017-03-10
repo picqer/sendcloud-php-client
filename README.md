@@ -13,9 +13,9 @@ composer require picqer/sendcloud-php-client
 ```
 
 ## Set-up connection
-Prepare the client for connecting to SendCloud with your API key and secret
+Prepare the client for connecting to SendCloud with your API key, API secret and Sendcloud Partner id (optional)
 ```php
-$connection = new \Picqer\Carriers\SendCloud\Connection('apikey', 'apisecret');
+$connection = new \Picqer\Carriers\SendCloud\Connection('apikey', 'apisecret', 'partnerid');
 $sendCloud = new \Picqer\Carriers\SendCloud\SendCloud($connection);
 ```
 
