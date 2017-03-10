@@ -32,6 +32,13 @@ class Connection
     private $apiSecret;
 
     /**
+     * The Sendcloud Partner ID
+     *
+     * @var string
+     */
+    private $partnerId;
+
+    /**
      * Contains the HTTP client (Guzzle)
      * @var Client
      */
@@ -48,10 +55,11 @@ class Connection
      * @param string $apiKey API key for SendCloud
      * @param string $apiSecret API secret for SendCloud
      */
-    public function __construct($apiKey, $apiSecret)
+    public function __construct($apiKey, $apiSecret, $partnerId = null)
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
+        $this->partnerId = $partnerId;
     }
 
     /**
@@ -75,6 +83,10 @@ class Connection
             'auth' => [$this->apiKey, $this->apiSecret],
             'handler' => $handlerStack
         ];
+
+        if (! is_null($this->partnerId)) {
+            $clientConfig['headers']['Sendcloud-Partner-Id'] = $this->partnerId;
+        }
 
         $this->client = new Client($clientConfig);
 
