@@ -15,7 +15,7 @@ class Connection
      *
      * @var string
      */
-    private $apiUrl = 'https://panel.sendcloud.nl/api/v2/';
+    private $apiUrl = 'https://panel.sendcloud.sc/api/v2/';
 
     /**
      * The API key
