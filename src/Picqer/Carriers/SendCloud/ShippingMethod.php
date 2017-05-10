@@ -21,6 +21,7 @@ class ShippingMethod extends Model
     protected $fillable = [
         'id',
         'name',
+        'carrier',
         'price',
         'options',
         'countries'
