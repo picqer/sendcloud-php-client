@@ -111,13 +111,14 @@ class Connection
     /**
      * Perform a GET request
      * @param string $url
+     * @param array $params
      * @return array
      * @throws SendCloudApiException
      */
-    public function get($url)
+    public function get($url, $params = [])
     {
         try {
-            $result = $this->client()->get($url);
+            $result = $this->client()->get($url, ['query' => $params]);
             return $this->parseResponse($result);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {

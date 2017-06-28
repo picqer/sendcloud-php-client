@@ -14,9 +14,9 @@ use Picqer\Carriers\SendCloud\Connection;
 trait FindAll
 {
 
-    public function all()
+    public function all($params = [])
     {
-        $result = $this->connection()->get($this->url);
+        $result = $this->connection()->get($this->url, $params);
 
         return $this->collectionFromResult($result);
     }
