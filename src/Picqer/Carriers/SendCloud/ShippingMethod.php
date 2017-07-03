@@ -23,6 +23,9 @@ class ShippingMethod extends Model
         'name',
         'carrier',
         'price',
+        'min_weight',
+        'max_weight',
+        'service_point_input',
         'options',
         'countries'
     ];
