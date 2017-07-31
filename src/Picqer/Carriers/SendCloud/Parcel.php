@@ -104,7 +104,7 @@ class Parcel extends Model
         }
     }
 
-    private function getShipperName()
+    public function getShipperName()
     {
         foreach ($this->shipperShippingMethodIds as $shipper => $methodIdArray) {
             if (in_array($this->shipment['id'], $methodIdArray)) {
