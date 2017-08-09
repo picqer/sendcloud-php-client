@@ -25,12 +25,8 @@ trait FindAll
     {
         $collection = [];
 
-        if (isset($this->namespaces['plural']) && !empty($this->namespaces['plural'])) {
-            foreach ($result[$this->namespaces['plural']] as $r) {
-                $collection[] = new self($this->connection(), $r);
-            }
-        } else {
-            $collection = $result;
+        foreach ($result[$this->namespaces['plural']] as $r) {
+            $collection[] = new self($this->connection(), $r);
         }
 
         return $collection;
