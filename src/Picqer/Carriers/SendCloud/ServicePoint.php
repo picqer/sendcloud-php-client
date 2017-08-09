@@ -19,7 +19,11 @@ class ServicePoint extends Model
     use Query\Findable;
 
     protected $fillable = [
-        'sender_address'
+        'country',
+        'ne_latitude',
+        'ne_longitude',
+        'sw_latitude',
+        'sw_longitude',
     ];
 
     protected $url = 'service-points';
@@ -28,5 +32,13 @@ class ServicePoint extends Model
         'singular' => '',
         'plural' => ''
     ];
+
+    public function get($params = []) {
+
+        $url = $this->connection->apiUrl().DS.$this->url;
+        $result = $this->connection->get($url, $params, 'access_token');
+
+        return $result;
+    }
 
 }
