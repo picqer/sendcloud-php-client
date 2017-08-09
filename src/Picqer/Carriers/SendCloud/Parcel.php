@@ -37,6 +37,7 @@ class Parcel extends Model
         'company_name',
         'address',
         'address_divided',
+        'address_2',
         'city',
         'postal_code',
         'telephone',
