@@ -51,7 +51,8 @@ class Parcel extends Model
         'order_number',
         'tracking_number',
         'weight',
-        'to_service_point'
+        'to_service_point',
+        'total_insured_value'
     ];
 
     protected $url = 'parcels';
@@ -105,7 +106,7 @@ class Parcel extends Model
         }
     }
 
-    private function getShipperName()
+    public function getShipperName()
     {
         foreach ($this->shipperShippingMethodIds as $shipper => $methodIdArray) {
             if (in_array($this->shipment['id'], $methodIdArray)) {
