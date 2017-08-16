@@ -7,9 +7,19 @@ namespace Picqer\Carriers\SendCloud;
  *
  * @property integer id
  * @property string name
- * @property float price
- * @property array options
- * @property array countries
+ * @property string street
+ * @property string house_number
+ * @property string postal_code
+ * @property string city
+ * @property string latitude
+ * @property string longitude
+ * @property string email
+ * @property string phone
+ * @property string homepage
+ * @property string carrier
+ * @property string country
+ * @property array formatted_opening_times
+ * @property boolean open_tomorrow
  *
  * @package Picqer\Carriers\SendCloud
  */
