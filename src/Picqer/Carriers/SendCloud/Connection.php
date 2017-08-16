@@ -116,10 +116,10 @@ class Connection
      * @return array
      * @throws SendCloudApiException
      */
-    public function get($url, $params = [], $auth = false)
+    public function get($url, $params = [], $auth = null)
     {
         try {
-            if ($auth) {
+            if (!is_null($auth)) {
                 $params[$auth] = $this->apiKey;
             }
             $result = $this->client()->get($url, ['query' => $params]);
