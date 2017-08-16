@@ -16,14 +16,24 @@ namespace Picqer\Carriers\SendCloud;
 class ServicePoint extends Model
 {
 
-    use Query\Findable;
+    use Query\Filter;
 
     protected $fillable = [
+        'id',
+        'name',
+        'street',
+        'house_number',
+        'postal_code',
+        'city',
+        'latitude',
+        'longitude',
+        'email',
+        'phone',
+        'homepage',
+        'carrier',
         'country',
-        'ne_latitude',
-        'ne_longitude',
-        'sw_latitude',
-        'sw_longitude',
+        'formatted_opening_times',
+        'open_tomorrow'
     ];
 
     protected $url = 'service-points';
@@ -32,13 +42,5 @@ class ServicePoint extends Model
         'singular' => '',
         'plural' => ''
     ];
-
-    public function get($params = []) {
-
-        $url = $this->connection->apiUrl().DS.$this->url;
-        $result = $this->connection->get($url, $params, 'access_token');
-
-        return $result;
-    }
 
 }
