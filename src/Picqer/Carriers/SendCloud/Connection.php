@@ -84,7 +84,7 @@ class Connection
             'handler' => $handlerStack
         ];
 
-        if (! is_null($this->partnerId)) {
+        if (!is_null($this->partnerId)) {
             $clientConfig['headers']['Sendcloud-Partner-Id'] = $this->partnerId;
         }
 
@@ -109,19 +109,25 @@ class Connection
     }
 
     /**
+     * Return the api key
+     *
+     * @return string
+     */
+    public function apiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
      * Perform a GET request
      * @param string $url
      * @param array $params
-     * @param string $auth
      * @return array
      * @throws SendCloudApiException
      */
-    public function get($url, $params = [], $auth = null)
+    public function get($url, $params = [])
     {
         try {
-            if (!is_null($auth)) {
-                $params[$auth] = $this->apiKey;
-            }
             $result = $this->client()->get($url, ['query' => $params]);
             return $this->parseResponse($result);
         } catch (RequestException $e) {
@@ -209,7 +215,7 @@ class Connection
             $responseBody = $response->getBody()->getContents();
             $resultArray = json_decode($responseBody, true);
 
-            if ( ! is_array($resultArray)) {
+            if (!is_array($resultArray)) {
                 throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody), $response->getStatusCode());
             }
 
