@@ -18,6 +18,7 @@ namespace Picqer\Carriers\SendCloud;
  * @property array data
  * @property array country
  * @property array shipment
+ * @property array label
  * @property bool requestShipment
  * @property string order_number
  * @property string tracking_number
@@ -46,6 +47,7 @@ class Parcel extends Model
         'data',
         'country',
         'shipment',
+        'label',
         'reference',
         'requestShipment',
         'order_number',
