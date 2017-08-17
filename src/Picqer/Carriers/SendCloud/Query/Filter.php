@@ -16,7 +16,7 @@ trait Filter
 
     public function all($params = [])
     {
-        $params['access_token'] = $this->connection->apiKey();
+        $params['access_token'] = $this->connection->getApiKey();
         $url = $this->connection->apiUrl() . '/' . $this->url;
         $result = $this->connection->get($url, $params);
 
