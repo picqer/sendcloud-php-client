@@ -113,7 +113,7 @@ class Connection
      *
      * @return string
      */
-    public function apiKey()
+    public function getApiKey()
     {
         return $this->apiKey;
     }
