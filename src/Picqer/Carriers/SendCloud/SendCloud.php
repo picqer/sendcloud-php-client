@@ -67,4 +67,14 @@ class SendCloud
         return new User($this->connection);
     }
 
+    /**
+     * SenderAddress Resource
+     *
+     * @return SenderAddress
+     */
+    public function sender_addresses()
+    {
+        return new SenderAddress($this->connection);
+    }
+
 }
