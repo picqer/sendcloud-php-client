@@ -23,6 +23,7 @@ namespace Picqer\Carriers\SendCloud;
  * @property string order_number
  * @property string tracking_number
  * @property string weight
+ * @property string sender_address
  *
  * @package Picqer\Carriers\SendCloud
  */
@@ -53,7 +54,8 @@ class Parcel extends Model
         'order_number',
         'tracking_number',
         'weight',
-        'total_insured_value'
+        'total_insured_value',
+        'sender_address'
     ];
 
     protected $url = 'parcels';
