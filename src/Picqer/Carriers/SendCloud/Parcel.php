@@ -18,10 +18,12 @@ namespace Picqer\Carriers\SendCloud;
  * @property array data
  * @property array country
  * @property array shipment
+ * @property array label
  * @property bool requestShipment
  * @property string order_number
  * @property string tracking_number
  * @property string weight
+ * @property string sender_address
  *
  * @package Picqer\Carriers\SendCloud
  */
@@ -38,6 +40,7 @@ class Parcel extends Model
         'address',
         'house_number',
         'address_divided',
+        'address_2',
         'city',
         'postal_code',
         'telephone',
@@ -46,13 +49,15 @@ class Parcel extends Model
         'data',
         'country',
         'shipment',
+        'label',
         'reference',
         'requestShipment',
         'order_number',
         'tracking_number',
         'weight',
         'to_service_point',
-        'total_insured_value'
+        'total_insured_value',
+        'sender_address'
     ];
 
     protected $url = 'parcels';
@@ -64,11 +69,11 @@ class Parcel extends Model
 
     protected $shipperShippingMethodIds = [
         'BPost' => [54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 82, 83, 95, 96],
-        'DHL' => [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 38, 40, 53, 81],
+        'DHL' => [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 38, 40, 53, 81, 117],
         'DHL Germany' => [89, 90, 91, 92, 93, 94],
-        'DPD' => [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 85, 86, 87],
+        'DPD' => [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 85, 86, 87, 109],
         'Fadello' => [88],
-        'PostNL' => [1, 2, 3, 4, 5, 6, 7, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39, 84],
+        'PostNL' => [1, 2, 3, 4, 5, 6, 7, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39, 84, 318, 319, 320, 321, 322, 323, 324, 325, 326],
     ];
 
     public function getTrackingUrl()
