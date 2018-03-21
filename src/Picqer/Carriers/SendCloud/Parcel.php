@@ -121,4 +121,9 @@ class Parcel extends Model
 
         return null;
     }
+    
+    public function getStatuses() {
+        $result = $this->connection()->get($this->url . '/statuses');
+        return $result;
+    }
 }
