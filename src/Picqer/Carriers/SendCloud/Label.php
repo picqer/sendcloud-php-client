@@ -38,4 +38,19 @@ class Label extends Model
 
         return $this->connection->download($url);
     }
+
+    /**
+     * Returns the label content (PDF) in A4 format
+     *
+     * @param int $position (0: Left Top, 1: Right Top, 2: Left bottom, 3: Right bottom)
+     * @return string
+     * @throws SendCloudApiException
+     */
+
+    public function normalPrinterContent($position = 0)
+    {
+        $url = str_replace($this->connection->apiUrl(), '', $this->normal_printer[$position]);
+
+        return $this->connection->download($url);
+    }
 }

@@ -48,6 +48,18 @@ $parcel->order_number = 'ORDER2014-52321';
 $parcel->save();
 ```
 
+## Service points
+```php
+$params = [
+    'country' => 'BE',
+    'ne_latitude' => '50.91442',
+    'ne_longitude' => '3.4763499',
+    'sw_latitude' => '50.84507',
+    'sw_longitude' => '3.3206277',
+];
+$servicePoints = $sendCloud->servicePoints()->get($params);
+```
+
 ## Exceptions
 Actions to the API may cause an Exception to be thrown in case something went wrong
 ```php
