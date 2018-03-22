@@ -52,6 +52,8 @@ class Parcel extends Model
         'label',
         'reference',
         'requestShipment',
+        'request_label',
+        'request_label_async',
         'order_number',
         'tracking_number',
         'weight',
