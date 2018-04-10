@@ -59,7 +59,8 @@ class Parcel extends Model
         'weight',
         'to_service_point',
         'total_insured_value',
-        'sender_address'
+        'sender_address',
+        'parcel_items'
     ];
 
     protected $url = 'parcels';
