@@ -32,6 +32,7 @@ class Parcel extends Model
 
     use Query\Findable;
     use Persistance\Storable;
+    use Persistance\Multiple;
 
     protected $fillable = [
         'id',
