@@ -53,6 +53,7 @@ class Parcel extends Model
         'requestShipment',
         'order_number',
         'tracking_number',
+        'tracking_url',
         'weight',
         'total_insured_value',
         'sender_address',
@@ -77,8 +78,7 @@ class Parcel extends Model
 
     public function getTrackingUrl()
     {
-        // SendCloud now gives us this undocumented field, so if it exists use this
-        if ( ! empty($this->tracking_url)) {
+        if (strlen($this->tracking_url) > 0) {
             return $this->tracking_url;
         }
 
