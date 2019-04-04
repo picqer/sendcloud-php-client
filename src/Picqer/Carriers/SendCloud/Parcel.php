@@ -58,6 +58,10 @@ class Parcel extends Model
         'total_insured_value',
         'sender_address',
         'to_service_point',
+        'customs_invoice_nr',
+        'country_state',
+        'customs_shipment_type',
+        'parcel_items'
     ];
 
     protected $url = 'parcels';
