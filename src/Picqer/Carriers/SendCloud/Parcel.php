@@ -62,6 +62,7 @@ class Parcel extends Model
         'country_state',
         'customs_shipment_type',
         'parcel_items',
+        'customs_declaration',
     ];
 
     protected $url = 'parcels';
