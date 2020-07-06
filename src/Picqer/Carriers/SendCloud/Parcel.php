@@ -58,6 +58,7 @@ class Parcel extends Model
         'total_insured_value',
         'sender_address',
         'to_service_point',
+        'to_post_number',
         'customs_invoice_nr',
         'country_state',
         'customs_shipment_type',
