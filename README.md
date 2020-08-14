@@ -34,15 +34,17 @@ $parcel = $sendcloudClient->parcels()->find(2342);
 ```php
 $parcel = $sendcloudClient->parcels();
 
+$parcel->shipment = 10; // Shipping method, get possibilities from $sendCloud->shippingMethods()->all()
+
 $parcel->name = 'John Smith';
 $parcel->company_name = 'ACME';
 $parcel->address = 'Wellingtonstreet 25';
 $parcel->city = 'Wellington';
 $parcel->postal_code = '3423 DD';
 $parcel->country = 'NL';
-$parcel->requestShipment = true;
-$parcel->shipment = 10; // Shipping method, get possibilities from $sendCloud->shippingMethods()->all()
 $parcel->order_number = 'ORDER2014-52321';
+
+$parcel->requestShipment = true; // Specifically needed to create a shipment after adding the parcel
 
 $parcel->save();
 ```
@@ -63,4 +65,38 @@ try {
 } catch (SendCloudApiException $e) {
     throw new Exception($e->getMessage());
 }
+```
+
+## Create an international parcel
+```php
+$parcel = $sendcloudClient->parcels();
+
+$parcel->shipment = 9; // Shipping method, get possibilities from $sendCloud->shippingMethods()->all()
+
+$parcel->name = 'John Smith';
+$parcel->company_name = 'ACME';
+$parcel->address = 'Wellingtonstreet 25';
+$parcel->city = 'Wellington';
+$parcel->postal_code = '3423 DD';
+$parcel->country = 'CH';
+$parcel->order_number = 'ORDER2014-52321';
+$parcel->weight = 20.4;
+
+// For international shipments
+$parcel->customs_invoice_nr = 'ORD9923882';
+$parcel->customs_shipment_type = 2; // Commercial goods
+$parcel->parcel_items = [
+    [
+        'description' => 'Cork',
+        'quantity' => 2,
+        'weight' => 10.2,
+        'value' => 12.93,
+        'hs_code' => '992783',
+        'origin_country' => 'CN',
+    ]
+];
+
+$parcel->requestShipment = true; // Specifically needed to create a shipment after adding the parcel
+
+$parcel->save();
 ```
