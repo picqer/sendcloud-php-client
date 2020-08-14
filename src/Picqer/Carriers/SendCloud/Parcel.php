@@ -75,6 +75,7 @@ class Parcel extends Model
         'currency',
         'carrier',
         'tracking_url',
+        'requestShipment', // Special one to create new shipments
     ];
 
     protected $url = 'parcels';
