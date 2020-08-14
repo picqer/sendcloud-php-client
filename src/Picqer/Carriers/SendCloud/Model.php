@@ -4,7 +4,6 @@ namespace Picqer\Carriers\SendCloud;
 
 abstract class Model
 {
-
     /**
      * @var Connection
      */
@@ -132,8 +131,10 @@ abstract class Model
 
     public function json()
     {
-        $json = [];
-        $json[$this->namespaces['singular']] = $this->attributes;
+        $json = [
+            $this->namespaces['singular'] => $this->attributes
+        ];
+
         return json_encode($json);
     }
 

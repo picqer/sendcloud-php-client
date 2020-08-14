@@ -15,7 +15,6 @@ namespace Picqer\Carriers\SendCloud;
  */
 class ShippingMethod extends Model
 {
-
     use Query\Findable;
 
     protected $fillable = [

@@ -96,16 +96,16 @@ class Parcel extends Model
 
     public function getPrimaryLabelUrl(): string
     {
-        // If new type of documents is not declared, use old url
-        if (! is_array($this->documents) || count($this->documents) === 0) {
-            return $this->label['label_printer'];
-        }
-
         // If multiple documents are supplied, type 'label' is the primary label
-        foreach ($this->documents as $document) {
-            if ($document['type'] === 'label') {
-                return $document['link'];
+        if (is_array($this->documents)) {
+            foreach ($this->documents as $document) {
+                if ($document['type'] === 'label') {
+                    return $document['link'];
+                }
             }
         }
+
+        // If new type of documents is not declared, use old url
+        return $this->label['label_printer'];
     }
 }

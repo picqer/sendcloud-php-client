@@ -22,7 +22,6 @@ namespace Picqer\Carriers\SendCloud;
  */
 class User extends Model
 {
-
     use Query\FindOne;
 
     protected $fillable = [

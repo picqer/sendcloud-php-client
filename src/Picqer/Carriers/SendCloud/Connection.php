@@ -9,33 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class Connection
 {
-
-    /**
-     * Holds the API url for test requests
-     *
-     * @var string
-     */
     private $apiUrl = 'https://panel.sendcloud.sc/api/v2/';
-
-    /**
-     * The API key
-     *
-     * @var string
-     */
     private $apiKey;
-
-    /**
-     * The API secret
-     *
-     * @var string
-     */
     private $apiSecret;
-
-    /**
-     * The Sendcloud Partner ID
-     *
-     * @var string
-     */
     private $partnerId;
 
     /**
@@ -50,24 +26,18 @@ class Connection
      */
     protected $middleWares = [];
 
-
-    /**
-     * @param string $apiKey API key for SendCloud
-     * @param string $apiSecret API secret for SendCloud
-     */
-    public function __construct($apiKey, $apiSecret, $partnerId = null)
+    public function __construct(string $apiKey, string $apiSecret, ?string $partnerId = null)
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
         $this->partnerId = $partnerId;
     }
 
-    /**
-     * @return Client
-     */
-    public function client()
+    public function client(): Client
     {
-        if ($this->client) return $this->client;
+        if ($this->client) {
+            return $this->client;
+        }
 
         $handlerStack = HandlerStack::create();
         foreach ($this->middleWares as $middleWare) {
@@ -98,12 +68,7 @@ class Connection
         $this->middleWares[] = $middleWare;
     }
 
-    /**
-     * Return the correct url for set environment
-     *
-     * @return string
-     */
-    public function apiUrl()
+    public function apiUrl(): string
     {
         return $this->apiUrl;
     }
@@ -115,7 +80,7 @@ class Connection
      * @return array
      * @throws SendCloudApiException
      */
-    public function get($url, $params = [])
+    public function get($url, $params = []): array
     {
         try {
             $result = $this->client()->get($url, ['query' => $params]);
@@ -133,10 +98,10 @@ class Connection
      * Perform a POST request
      * @param string $url
      * @param mixed $body
-     * @return string
+     * @return array
      * @throws SendCloudApiException
      */
-    public function post($url, $body)
+    public function post($url, $body): array
     {
         try {
             $result = $this->client()->post($url, ['body' => $body]);
@@ -154,10 +119,10 @@ class Connection
      * Perform PUT request
      * @param string $url
      * @param mixed $body
-     * @return string
+     * @return array
      * @throws SendCloudApiException
      */
-    public function put($url, $body)
+    public function put($url, $body): array
     {
         try {
             $result = $this->client()->put($url, ['body' => $body]);
@@ -174,7 +139,7 @@ class Connection
     /**
      * Perform DELETE request
      * @param string $url
-     * @return string
+     * @return array
      * @throws SendCloudApiException
      */
     public function delete($url)
