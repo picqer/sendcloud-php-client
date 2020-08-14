@@ -5,7 +5,10 @@
     "keywords": [
         "api",
         "php",
-        "sendcloud"
+        "sendcloud",
+        "client",
+        "shipments",
+        "parcels"
     ],
     "homepage": "http://github.com/picqer/sendcloud-php-client",
     "license": "MIT",
@@ -16,7 +19,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.2.0",
         "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {

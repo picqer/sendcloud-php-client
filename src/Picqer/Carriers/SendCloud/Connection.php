@@ -205,7 +205,7 @@ class Connection
             $responseBody = $response->getBody()->getContents();
             $resultArray = json_decode($responseBody, true);
 
-            if ( ! is_array($resultArray)) {
+            if (! is_array($resultArray)) {
                 throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody), $response->getStatusCode());
             }
 
@@ -225,8 +225,8 @@ class Connection
     /**
      * Returns the selected environment
      *
-     * @deprecated
      * @return string
+     * @deprecated
      */
     public function getEnvironment()
     {
@@ -236,9 +236,9 @@ class Connection
     /**
      * Set the environment for the client
      *
-     * @deprecated
      * @param string $environment
      * @throws SendCloudApiException
+     * @deprecated
      */
     public function setEnvironment($environment)
     {
@@ -251,13 +251,14 @@ class Connection
      * Download a resource.
      *
      * @param string $url
+     * @param array $headers
      * @return string
      * @throws SendCloudApiException
      */
-    public function download($url)
+    public function download($url, array $headers = ['Accept' => 'application/pdf'])
     {
         try {
-            $result = $this->client()->get($url);
+            $result = $this->client()->get($url, ['headers' => $headers]);
         } catch (RequestException $e) {
             throw new SendCloudApiException('SendCloud error: ' . $e->getMessage(), $e->getResponse()->getStatusCode());
         }

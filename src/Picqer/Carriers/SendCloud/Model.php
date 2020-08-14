@@ -71,8 +71,9 @@ abstract class Model
      */
     protected function fill(array $attributes)
     {
-        if (array_key_exists($this->namespaces['singular'], $attributes))
+        if (array_key_exists($this->namespaces['singular'], $attributes)) {
             $attributes = $attributes[$this->namespaces['singular']];
+        }
 
         foreach ($this->fillableFromArray($attributes) as $key => $value) {
             if ($this->isFillable($key)) {
