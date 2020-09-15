@@ -66,6 +66,7 @@ class Parcel extends Model
         'parcel_items',
         'documents',
         'type',
+        'sender_address',
         'shipment_uuid',
         'shipping_method',
         'external_order_id',
@@ -79,7 +80,6 @@ class Parcel extends Model
         'carrier',
         'tracking_url',
         'requestShipment', // Special one to create new shipments
-        'sender_address',
     ];
 
     protected $url = 'parcels';
