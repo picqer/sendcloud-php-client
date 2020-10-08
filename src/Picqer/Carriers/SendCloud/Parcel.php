@@ -9,6 +9,7 @@ namespace Picqer\Carriers\SendCloud;
  * @property string name
  * @property string company_name
  * @property string address
+ * @property string house_number
  * @property array address_divided
  * @property string city
  * @property string postal_code
@@ -38,6 +39,7 @@ class Parcel extends Model
         'id',
         'address',
         'address_2',
+        'house_number',
         'address_divided',
         'city',
         'company_name',
