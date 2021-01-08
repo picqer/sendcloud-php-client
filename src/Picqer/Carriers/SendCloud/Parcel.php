@@ -118,6 +118,6 @@ class Parcel extends Model
 
     public function cancel()
     {
-        return $this->connection()->post($this->url . '/' . urlencode($this->id).'/cancel', null);
+        return $this->connection()->cancel($this->url . '/' . urlencode($this->id).'/cancel');
     }
 }

@@ -116,6 +116,19 @@ class Connection
     }
 
     /**
+     * Perform a CANCEL request, because Sendcloud return a 410 status after cancelling a parcel (WHY!?!?!?)
+     * @param string $url
+     * @param mixed $body
+     * @return array
+     * @throws SendCloudApiException
+     */
+    public function cancel($url): array
+    {
+        $result = $this->client()->post($url);
+        return $this->parseResponse($result);
+    }
+
+    /**
      * Perform PUT request
      * @param string $url
      * @param mixed $body
