@@ -115,4 +115,9 @@ class Parcel extends Model
         // If new type of documents is not declared, use old url
         return $this->label['label_printer'];
     }
+
+    public function cancel()
+    {
+        return $this->connection()->post($this->url . '/' . urlencode($this->id).'/cancel', null);
+    }
 }
