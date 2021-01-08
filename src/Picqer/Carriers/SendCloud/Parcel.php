@@ -39,6 +39,7 @@ class Parcel extends Model
         'address',
         'address_2',
         'address_divided',
+        'house_number',
         'city',
         'company_name',
         'country',
@@ -79,6 +80,7 @@ class Parcel extends Model
         'currency',
         'carrier',
         'tracking_url',
+        'request_label',
         'requestShipment', // Special one to create new shipments
     ];
 
