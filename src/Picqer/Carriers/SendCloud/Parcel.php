@@ -39,6 +39,7 @@ class Parcel extends Model
         'address',
         'address_2',
         'address_divided',
+        'house_number',
         'city',
         'company_name',
         'country',
@@ -79,6 +80,7 @@ class Parcel extends Model
         'currency',
         'carrier',
         'tracking_url',
+        'request_label',
         'requestShipment', // Special one to create new shipments
     ];
 
@@ -112,5 +114,10 @@ class Parcel extends Model
 
         // If new type of documents is not declared, use old url
         return $this->label['label_printer'];
+    }
+
+    public function cancel()
+    {
+        return $this->connection()->cancel($this->url . '/' . urlencode($this->id).'/cancel');
     }
 }
