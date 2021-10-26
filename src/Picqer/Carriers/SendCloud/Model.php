@@ -4,7 +4,6 @@ namespace Picqer\Carriers\SendCloud;
 
 abstract class Model
 {
-
     /**
      * @var Connection
      */
@@ -71,8 +70,9 @@ abstract class Model
      */
     protected function fill(array $attributes)
     {
-        if (array_key_exists($this->namespaces['singular'], $attributes))
+        if (array_key_exists($this->namespaces['singular'], $attributes)) {
             $attributes = $attributes[$this->namespaces['singular']];
+        }
 
         foreach ($this->fillableFromArray($attributes) as $key => $value) {
             if ($this->isFillable($key)) {
@@ -115,6 +115,11 @@ abstract class Model
         return null;
     }
 
+    public function __isset($key)
+    {
+        return isset($this->attributes[$key]);
+    }
+
     public function __set($key, $value)
     {
         if ($this->isFillable($key)) {
@@ -131,8 +136,10 @@ abstract class Model
 
     public function json()
     {
-        $json = [];
-        $json[$this->namespaces['singular']] = $this->attributes;
+        $json = [
+            $this->namespaces['singular'] => $this->attributes
+        ];
+
         return json_encode($json);
     }
 

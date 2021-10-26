@@ -4,7 +4,6 @@ namespace Picqer\Carriers\SendCloud;
 
 class SendCloud
 {
-
     /**
      * The HTTP connection
      *
@@ -17,64 +16,44 @@ class SendCloud
         $this->connection = $connection;
     }
 
-    /**
-     * Invoices Resource
-     *
-     * @return Invoice
-     */
-    public function invoices()
+    public function invoices(): Invoice
     {
         return new Invoice($this->connection);
     }
 
-    /**
-     * Label Resource
-     *
-     * @return Label
-     */
-    public function labels()
+    public function labels(): Label
     {
         return new Label($this->connection);
     }
 
-    /**
-     * Parcels Resource
-     *
-     * @return Parcel
-     */
-    public function parcels()
+    public function parcels(): Parcel
     {
         return new Parcel($this->connection);
     }
 
-    /**
-     * Shipping Method Resource
-     *
-     * @return ShippingMethod
-     */
-    public function shippingMethods()
+    public function shippingMethods(): ShippingMethod
     {
         return new ShippingMethod($this->connection);
     }
 
-    /**
-     * User Resource
-     *
-     * @return User
-     */
-    public function users()
+    public function users(): User
     {
         return new User($this->connection);
+    }
+
+    public function senderAddresses(): SenderAddress
+    {
+        return new SenderAddress($this->connection);
     }
 
     /**
      * SenderAddress Resource
      *
      * @return SenderAddress
+     * @deprecated Inconsistent nameing, use senderAddresses()
      */
     public function sender_addresses()
     {
-        return new SenderAddress($this->connection);
+        return $this->senderAddresses();
     }
-
 }

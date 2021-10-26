@@ -1,4 +1,5 @@
 <?php
+
 namespace Picqer\Carriers\SendCloud;
 
 /**
@@ -20,7 +21,6 @@ namespace Picqer\Carriers\SendCloud;
  */
 class SenderAddress extends Model
 {
-
     use Query\Findable;
 
     protected $fillable = [

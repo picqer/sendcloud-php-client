@@ -17,10 +17,11 @@ namespace Picqer\Carriers\SendCloud;
  * @property array status
  * @property array data
  * @property array country
+ * @property string country_state
  * @property array shipment
  * @property array label
- * @property bool totalOrderValue
- * @property bool totalOrderValueCurrency
+ * @property float total_order_value
+ * @property string total_order_value_currency
  * @property bool requestShipment
  * @property string order_number
  * @property string tracking_number
@@ -31,43 +32,61 @@ namespace Picqer\Carriers\SendCloud;
  */
 class Parcel extends Model
 {
-
     use Query\Findable;
     use Persistance\Storable;
+    use Persistance\Multiple;
 
     protected $fillable = [
         'id',
-        'name',
-        'company_name',
         'address',
-        'address_divided',
         'address_2',
+        'address_divided',
         'city',
-        'postal_code',
-        'telephone',
-        'email',
-        'status',
-        'data',
+        'company_name',
         'country',
-        'shipment',
-        'label',
+        'country_state',
+        'data',
+        'date_created',
+        'email',
+        'name',
+        'postal_code',
         'reference',
-        'requestShipment',
-        'order_number',
+        'shipment',
+        'status',
+        'to_service_point',
+        'telephone',
         'tracking_number',
-        'tracking_url',
         'weight',
+        'label',
+        'customs_declaration',
+        'order_number',
+        'insured_value',
         'total_insured_value',
         'total_order_value',
         'total_order_value_currency',
         'sender_address',
         'to_service_point',
         'to_post_number',
+        'to_state',
         'customs_invoice_nr',
-        'country_state',
         'customs_shipment_type',
         'parcel_items',
-        'customs_declaration',
+        'documents',
+        'type',
+        'sender_address',
+        'shipment_uuid',
+        'shipping_method',
+        'external_order_id',
+        'external_shipment_id',
+        'external_reference',
+        'is_return',
+        'note',
+        'to_post_number',
+        'total_order_cost',
+        'currency',
+        'carrier',
+        'tracking_url',
+        'requestShipment', // Special one to create new shipments
     ];
 
     protected $url = 'parcels';
@@ -77,57 +96,28 @@ class Parcel extends Model
         'plural' => 'parcels'
     ];
 
-    protected $shipperShippingMethodIds = [
-        'BPost' => [54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 82, 83, 95, 96],
-        'DHL' => [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 38, 40, 53, 81, 117],
-        'DHL Germany' => [89, 90, 91, 92, 93, 94],
-        'DPD' => [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 85, 86, 87, 109],
-        'Fadello' => [88],
-        'PostNL' => [1, 2, 3, 4, 5, 6, 7, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39, 84, 318, 319, 320, 321, 322, 323, 324, 325, 326],
-    ];
-
-    public function getTrackingUrl()
+    public function getTrackingUrl(): ?string
     {
-        if (strlen($this->tracking_url) > 0) {
-            return $this->tracking_url;
-        }
-
-        // Otherwise build url based on old method
-        $shipper = $this->getShipperName();
-
-        switch ($shipper) {
-            case 'BPost':
-                return sprintf('http://track.bpost.be/btr/web/#/search?itemCode=%s&lang=en', $this->tracking_number);
-                break;
-            case 'DHL':
-                return sprintf('https://www.dhlparcel.%s/%s/particulier/ontvangen/track-trace?tt=%s', $this->country['iso_2'] == 'BE' ? 'be' : 'nl', 'nl', $this->tracking_number);
-                break;
-            case 'DHL Germany':
-                return sprintf('https://nolp.dhl.de/nextt-online-public/set_identcodes.do?runtime=standalone&idc=%s', $this->tracking_number);
-                break;
-            case 'DPD':
-                return sprintf('https://tracking.dpd.de/parcelstatus?locale=%s&query=%s', 'en_EN', $this->tracking_number);
-                break;
-            case 'Fadello':
-                return sprintf('https://www.fadello.nl/livetracker?c=%s&pc=%s', $this->tracking_number, $this->postal_code);
-                break;
-            case 'PostNL':
-                return sprintf('https://jouw.postnl.nl/#!/track-en-trace/%s/%s/%s', $this->tracking_number, $this->country['iso_2'], $this->postal_code);
-                break;
-            default:
-                return null;
-                break;
-        }
+        return $this->tracking_url;
     }
 
-    public function getShipperName()
+    public function getShipperName(): ?string
     {
-        foreach ($this->shipperShippingMethodIds as $shipper => $methodIdArray) {
-            if (in_array($this->shipment['id'], $methodIdArray)) {
-                return $shipper;
+        return $this->carrier['code'];
+    }
+
+    public function getPrimaryLabelUrl(): string
+    {
+        // If multiple documents are supplied, type 'label' is the primary label
+        if (is_array($this->documents)) {
+            foreach ($this->documents as $document) {
+                if ($document['type'] === 'label') {
+                    return $document['link'];
+                }
             }
         }
 
-        return null;
+        // If new type of documents is not declared, use old url
+        return $this->label['label_printer'];
     }
 }

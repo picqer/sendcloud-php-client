@@ -17,7 +17,6 @@ namespace Picqer\Carriers\SendCloud;
  */
 class Invoice extends Model
 {
-
     use Query\FindAll;
 
     protected $fillable = [

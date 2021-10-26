@@ -12,7 +12,6 @@ namespace Picqer\Carriers\SendCloud;
  */
 class Label extends Model
 {
-
     use Query\FindOne;
 
     protected $fillable = [
