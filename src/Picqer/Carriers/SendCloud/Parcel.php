@@ -81,6 +81,10 @@ class Parcel extends Model
         'currency',
         'carrier',
         'tracking_url',
+        'request_label',
+        'request_label_async',
+        'apply_shipping_rules',
+        'shipping_method_checkout_name',
         'requestShipment', // Special one to create new shipments
     ];
 
