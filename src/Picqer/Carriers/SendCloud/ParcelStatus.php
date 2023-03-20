@@ -13,8 +13,4 @@ class ParcelStatus  extends Model
 
     protected $url = 'parcels/statuses';
 
-    protected $namespaces = [
-        'singular' => 'status',
-        'plural' => 'statuses'
-    ];
 }
