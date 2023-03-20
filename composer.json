@@ -1,5 +1,5 @@
 {
-    "name": "picqer/sendcloud-php-client",
+    "name": "nocodelab/sendcloud-php-client",
     "type": "library",
     "description": "A PHP Client for the SendCloud API",
     "keywords": [
@@ -10,7 +10,7 @@
         "shipments",
         "parcels"
     ],
-    "homepage": "http://github.com/picqer/sendcloud-php-client",
+    "homepage": "https://github.com/nocodelab/sendcloud-php-client",
     "license": "MIT",
     "authors": [
         {
