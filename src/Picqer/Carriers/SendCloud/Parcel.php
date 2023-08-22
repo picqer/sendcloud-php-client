@@ -5,29 +5,75 @@ namespace Picqer\Carriers\SendCloud;
 /**
  * Class Parcel
  *
- * @property integer id
  * @property string name
  * @property string company_name
+ * @property integer contract
  * @property string address
+ * @property string address_2
  * @property string house_number
- * @property array address_divided
  * @property string city
  * @property string postal_code
  * @property string telephone
+ * @property bool request_label
  * @property string email
- * @property array status
  * @property array data
  * @property array country
- * @property string country_state
  * @property array shipment
- * @property array label
- * @property bool requestShipment
+ * @property float weight
  * @property string order_number
- * @property string tracking_number
- * @property float total_order_value
+ * @property integer insured_value
  * @property string total_order_value_currency
- * @property string weight
- * @property string sender_address
+ * @property float total_order_value
+ * @property integer quantity
+ * @property string shipping_method_checkout_name
+ * @property string to_post_number
+ * @property string country_state
+ * @property integer sender_address
+ * @property string customs_invoice_nr
+ * @property integer customs_shipment_type
+ * @property string external_reference
+ * @property integer to_service_point
+ * @property integer total_insured_value
+ * @property string shipment_uuid
+ * @property array parcel_items
+ * @property bool is_return
+ * @property string length
+ * @property string width
+ * @property string height
+ * @property bool request_label_async
+ * @property bool apply_shipping_rules
+ * @property string from_name
+ * @property string from_company_name
+ * @property string from_address_1
+ * @property string from_address_2
+ * @property string from_house_number
+ * @property string from_city
+ * @property string from_postal_code
+ * @property string from_country
+ * @property string from_telephone
+ * @property string from_email
+ * @property string from_vat_number
+ * @property string from_eori_number
+ * @property string from_inbound_vat_number
+ * @property string from_inbound_eori_number
+ * @property string from_ioss_number
+ * @property array address_divided
+ * @property string date_created
+ * @property string date_updated
+ * @property string date_announced
+ * @property integer id
+ * @property array label
+ * @property array status
+ * @property array documents
+ * @property string tracking_number
+ * @property string colli_tracking_number
+ * @property string colli_uuid
+ * @property string collo_nr
+ * @property integer collo_count
+ * @property string|null awb_tracking_number
+ * @property integer|null box_number
+ * @property object customs_declaration
+ * @property object errors
  *
  * @package Picqer\Carriers\SendCloud
  */
@@ -38,58 +84,75 @@ class Parcel extends Model
     use Persistance\Multiple;
 
     protected $fillable = [
-        'id',
+        'name',
+        'company_name',
+        'contract',
         'address',
         'address_2',
         'house_number',
-        'address_divided',
         'city',
-        'company_name',
-        'country',
-        'country_state',
-        'data',
-        'date_created',
-        'email',
-        'name',
         'postal_code',
-        'reference',
-        'shipment',
-        'status',
-        'to_service_point',
         'telephone',
-        'tracking_number',
+        'request_label',
+        'email',
+        'data',
+        'country',
+        'shipment',
         'weight',
-        'label',
-        'customs_declaration',
         'order_number',
         'insured_value',
-        'total_insured_value',
-        'total_order_value',
         'total_order_value_currency',
-        'to_state',
+        'total_order_value',
+        'quantity',
+        'shipping_method_checkout_name',
+        'to_post_number',
+        'country_state',
+        'sender_address',
         'customs_invoice_nr',
         'customs_shipment_type',
-        'parcel_items',
-        'documents',
-        'type',
-        'sender_address',
-        'shipment_uuid',
-        'shipping_method',
-        'external_order_id',
-        'external_shipment_id',
         'external_reference',
+        'to_service_point',
+        'total_insured_value',
+        'shipment_uuid',
+        'parcel_items',
         'is_return',
-        'note',
-        'to_post_number',
-        'total_order_cost',
-        'currency',
-        'carrier',
-        'tracking_url',
-        'request_label',
+        'length',
+        'width',
+        'height',
         'request_label_async',
         'apply_shipping_rules',
-        'shipping_method_checkout_name',
-        'requestShipment', // Special one to create new shipments
+        'from_name',
+        'from_company_name',
+        'from_address_1',
+        'from_address_2',
+        'from_house_number',
+        'from_city',
+        'from_postal_code',
+        'from_country',
+        'from_telephone',
+        'from_email',
+        'from_vat_number',
+        'from_eori_number',
+        'from_inbound_vat_number',
+        'from_inbound_eori_number',
+        'from_ioss_number',
+        'address_divided',
+        'date_created',
+        'date_updated',
+        'date_announced',
+        'id',
+        'label',
+        'status',
+        'documents',
+        'tracking_number',
+        'colli_tracking_number',
+        'colli_uuid',
+        'collo_nr',
+        'collo_count',
+        'awb_tracking_number',
+        'box_number',
+        'customs_declaration',
+        'errors',
     ];
 
     protected $url = 'parcels';

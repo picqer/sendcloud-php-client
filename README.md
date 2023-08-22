@@ -44,7 +44,33 @@ $parcel->postal_code = '3423 DD';
 $parcel->country = 'NL';
 $parcel->order_number = 'ORDER2014-52321';
 
-$parcel->requestShipment = true; // Specifically needed to create a shipment after adding the parcel
+$parcel->request_label = true; // Specifically needed to create a shipment after adding the parcel
+
+$parcel->save();
+```
+
+## Create a new parcel with a defined sender address
+```php
+$parcel = $sendcloudClient->parcels();
+
+$parcel->shipment = 10; // Shipping method, get possibilities from $sendCloud->shippingMethods()->all()
+
+$parcel->name = 'John Smith';
+$parcel->company_name = 'ACME';
+$parcel->address = 'Wellingtonstreet 25';
+$parcel->city = 'Wellington';
+$parcel->postal_code = '3423 DD';
+$parcel->country = 'NL';
+$parcel->order_number = 'ORDER2014-52321';
+
+$parcel->from_name = 'John Smith';
+$parcel->from_company_name = 'ACME';
+$parcel->from_address = 'Wellingtonstreet 25';
+$parcel->from_city = 'Wellington';
+$parcel->from_postal_code = '3423 DD';
+$parcel->from_country = 'NL';
+
+$parcel->request_label = true; // Specifically needed to create a shipment after adding the parcel
 
 $parcel->save();
 ```
@@ -96,7 +122,7 @@ $parcel->parcel_items = [
     ]
 ];
 
-$parcel->requestShipment = true; // Specifically needed to create a shipment after adding the parcel
+$parcel->request_label = true; // Specifically needed to create a shipment after adding the parcel
 
 $parcel->save();
 ```
