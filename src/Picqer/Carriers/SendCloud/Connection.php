@@ -98,13 +98,14 @@ class Connection
      * Perform a POST request
      * @param string $url
      * @param mixed $body
+     * @param array $query
      * @return array
      * @throws SendCloudApiException
      */
-    public function post($url, $body): array
+    public function post($url, $body, $query = []): array
     {
         try {
-            $result = $this->client()->post($url, ['body' => $body]);
+            $result = $this->client()->post($url, ['body' => $body, 'query' => $query]);
             return $this->parseResponse($result);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
@@ -119,13 +120,14 @@ class Connection
      * Perform PUT request
      * @param string $url
      * @param mixed $body
+     * @param array $query
      * @return array
      * @throws SendCloudApiException
      */
-    public function put($url, $body): array
+    public function put($url, $body, $query = []): array
     {
         try {
-            $result = $this->client()->put($url, ['body' => $body]);
+            $result = $this->client()->put($url, ['body' => $body, 'query' => $query]);
             return $this->parseResponse($result);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
@@ -139,13 +141,14 @@ class Connection
     /**
      * Perform DELETE request
      * @param string $url
+     * @param array $query
      * @return array
      * @throws SendCloudApiException
      */
-    public function delete($url)
+    public function delete($url, $query = [])
     {
         try {
-            $result = $this->client()->delete($url);
+            $result = $this->client()->delete($url, ['query' => $query]);
             return $this->parseResponse($result);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
@@ -171,10 +174,15 @@ class Connection
             $resultArray = json_decode($responseBody, true);
 
             if (! is_array($resultArray)) {
-                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody), $response->getStatusCode());
+                throw new SendCloudApiException(sprintf(
+                    'SendCloud error %s: %s',
+                    $response->getStatusCode(),
+                    $responseBody
+                ), $response->getStatusCode());
             }
 
-            if (array_key_exists('error', $resultArray)
+            if (
+                array_key_exists('error', $resultArray)
                 && is_array($resultArray['error'])
                 && array_key_exists('message', $resultArray['error'])
             ) {
@@ -231,4 +239,3 @@ class Connection
         return $result->getBody()->getContents();
     }
 }
-
