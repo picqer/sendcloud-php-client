@@ -174,10 +174,15 @@ class Connection
             $resultArray = json_decode($responseBody, true);
 
             if (! is_array($resultArray)) {
-                throw new SendCloudApiException(sprintf('SendCloud error %s: %s', $response->getStatusCode(), $responseBody), $response->getStatusCode());
+                throw new SendCloudApiException(sprintf(
+                    'SendCloud error %s: %s',
+                    $response->getStatusCode(),
+                    $responseBody
+                ), $response->getStatusCode());
             }
 
-            if (array_key_exists('error', $resultArray)
+            if (
+                array_key_exists('error', $resultArray)
                 && is_array($resultArray['error'])
                 && array_key_exists('message', $resultArray['error'])
             ) {
