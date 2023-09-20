@@ -28,6 +28,7 @@ namespace Picqer\Carriers\SendCloud;
  * @property string total_order_value_currency
  * @property string weight
  * @property string sender_address
+ * @property integer quantity
  *
  * @package Picqer\Carriers\SendCloud
  */
@@ -90,6 +91,7 @@ class Parcel extends Model
         'apply_shipping_rules',
         'shipping_method_checkout_name',
         'requestShipment', // Special one to create new shipments
+        'quantity',
     ];
 
     protected $url = 'parcels';
