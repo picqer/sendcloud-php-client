@@ -1,8 +1,8 @@
 Sendcloud PHP API Client
 ==========
-An unofficial client for the Sendcloud API. More info about Sendcloud on https://sendcloud.nl. Below are some examples on the usage of this client.
+An unofficial client for the Sendcloud API. More info about Sendcloud on https://www.sendcloud.nl/ Below are some examples on the usage of this client.
 
-Full docs of the Sendcloud API can be found on https://docs.sendcloud.sc/api/v2/index.html
+Full docs of the Sendcloud API can be found on [https://docs.sendcloud.sc/api/v2/index.html](https://api.sendcloud.dev/docs/sendcloud-public-api/getting-started)
 
 ## Installation
 This project can easily be installed through Composer.
