@@ -10,7 +10,7 @@
         "shipments",
         "parcels"
     ],
-    "homepage": "http://github.com/picqer/sendcloud-php-client",
+    "homepage": "https://github.com/picqer/sendcloud-php-client",
     "license": "MIT",
     "authors": [
         {
