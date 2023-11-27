@@ -5,18 +5,18 @@ namespace Picqer\Carriers\SendCloud;
 /**
  * Class User
  *
- * @property string username
- * @property string company_name
- * @property string telephone
- * @property string address
- * @property string postal_code
- * @property string city
- * @property string email
- * @property string company_logo
- * @property string registered
- * @property array data
- * @property array modules
- * @property array invoices
+ * @property string $username
+ * @property string $company_name
+ * @property string $telephone
+ * @property string $address
+ * @property string $postal_code
+ * @property string $city
+ * @property string $email
+ * @property string $company_logo
+ * @property string $registered
+ * @property array $data
+ * @property array $modules
+ * @property array $invoices
  *
  * @package Picqer\Carriers\SendCloud
  */

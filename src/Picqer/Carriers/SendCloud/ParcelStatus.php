@@ -3,8 +3,8 @@
 namespace Picqer\Carriers\SendCloud;
 
 /**
- * @property integer id
- * @property string message
+ * @property integer $id
+ * @property string $message
  */
 class ParcelStatus extends Model
 {

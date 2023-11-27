@@ -5,11 +5,11 @@ namespace Picqer\Carriers\SendCloud;
 /**
  * Class ShippingMethod
  *
- * @property integer id
- * @property string name
- * @property float price
- * @property array options
- * @property array countries
+ * @property integer $id
+ * @property string $name
+ * @property float $price
+ * @property array $options
+ * @property array $countries
  *
  * @package Picqer\Carriers\SendCloud
  */
