@@ -5,13 +5,13 @@ namespace Picqer\Carriers\SendCloud;
 /**
  * Class Invoice
  *
- * @property integer id
- * @property string description
- * @property float price_excl
- * @property float price_incl
- * @property string date
- * @property boolean isPayed
- * @property string items
+ * @property integer $id
+ * @property string $description
+ * @property float $price_excl
+ * @property float $price_incl
+ * @property string $date
+ * @property boolean $isPayed
+ * @property string $items
  *
  * @package Picqer\Carriers\SendCloud
  */
