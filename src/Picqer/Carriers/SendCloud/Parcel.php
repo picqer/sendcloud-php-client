@@ -92,6 +92,7 @@ class Parcel extends Model
         'shipping_method_checkout_name',
         'requestShipment', // Special one to create new shipments
         'quantity',
+        'contract',
     ];
 
     protected $url = 'parcels';
