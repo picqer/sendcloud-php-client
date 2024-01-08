@@ -51,6 +51,11 @@ class SendCloud
         return new SenderAddress($this->connection);
     }
 
+    public function contracts(): Contract
+    {
+        return new Contract($this->connection);
+    }
+
     /**
      * SenderAddress Resource
      *
