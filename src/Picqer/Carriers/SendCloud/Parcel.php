@@ -14,7 +14,7 @@ namespace Picqer\Carriers\SendCloud;
  * @property string city
  * @property string postal_code
  * @property string telephone
- * @property bool request_label
+ * @property bool requestShipment
  * @property string email
  * @property array data
  * @property array country
@@ -93,7 +93,7 @@ class Parcel extends Model
         'city',
         'postal_code',
         'telephone',
-        'request_label',
+        'requestShipment',
         'email',
         'data',
         'country',

@@ -44,7 +44,7 @@ $parcel->postal_code = '3423 DD';
 $parcel->country = 'NL';
 $parcel->order_number = 'ORDER2014-52321';
 
-$parcel->request_label = true; // Specifically needed to create a shipment after adding the parcel
+$parcel->requestShipment = true; // Specifically needed to create a shipment after adding the parcel
 
 $parcel->save();
 ```
@@ -70,7 +70,7 @@ $parcel->from_city = 'Wellington';
 $parcel->from_postal_code = '3423 DD';
 $parcel->from_country = 'NL';
 
-$parcel->request_label = true; // Specifically needed to create a shipment after adding the parcel
+$parcel->requestShipment = true; // Specifically needed to create a shipment after adding the parcel
 
 $parcel->save();
 ```
@@ -122,7 +122,7 @@ $parcel->parcel_items = [
     ]
 ];
 
-$parcel->request_label = true; // Specifically needed to create a shipment after adding the parcel
+$parcel->requestShipment = true; // Specifically needed to create a shipment after adding the parcel
 
 $parcel->save();
 ```
