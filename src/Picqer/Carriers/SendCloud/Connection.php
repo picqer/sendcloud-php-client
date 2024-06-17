@@ -13,6 +13,7 @@ class Connection
     private $apiKey;
     private $apiSecret;
     private $partnerId;
+    private $maxResponseSizeInBytes;
 
     /**
      * Contains the HTTP client (Guzzle)
@@ -26,11 +27,12 @@ class Connection
      */
     protected $middleWares = [];
 
-    public function __construct(string $apiKey, string $apiSecret, ?string $partnerId = null)
+    public function __construct(string $apiKey, string $apiSecret, ?string $partnerId = null, ?int $maxResponseSizeInBytes = 50000000)
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
         $this->partnerId = $partnerId;
+        $this->maxResponseSizeInBytes = $maxResponseSizeInBytes;
     }
 
     public function client(): Client
@@ -171,6 +173,11 @@ class Connection
             $response->getBody()->rewind();
 
             $responseBody = $response->getBody()->getContents();
+
+            if (strlen($responseBody) > $this->maxResponseSizeInBytes) {
+                throw new SendCloudApiException(sprintf('Response size exceeded maximum of %d bytes', $this->maxResponseSizeInBytes));
+            }
+
             $resultArray = json_decode($responseBody, true);
 
             if (! is_array($resultArray)) {
