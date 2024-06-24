@@ -12,10 +12,10 @@ class Connection
     private string $apiUrl = 'https://panel.sendcloud.sc/api/v2/';
     private string $apiKey;
     private string $apiSecret;
-    private ?string $partnerId;
-    private ?int $maxResponseSizeInBytes;
+    private ?string $partnerId = null;
+    private ?int $maxResponseSizeInBytes = null;
 
-    private Client $client;
+    private ?Client $client = null;
     protected array $middleWares = [];
 
     public function __construct(string $apiKey, string $apiSecret, ?string $partnerId = null)
@@ -27,7 +27,7 @@ class Connection
 
     public function client(): Client
     {
-        if ($this->client) {
+        if ($this->client instanceof Client) {
             return $this->client;
         }
 
@@ -180,6 +180,11 @@ class Connection
     public function setMaxResponseSizeInBytes(?int $maxResponseSizeInBytes): void
     {
         $this->maxResponseSizeInBytes = $maxResponseSizeInBytes;
+    }
+
+    public function getMaxResponseSizeInBytes(): ?int
+    {
+        return $this->maxResponseSizeInBytes;
     }
 
     public function download($url, array $headers = ['Accept' => 'application/pdf']): string
