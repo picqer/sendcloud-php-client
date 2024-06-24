@@ -23,7 +23,6 @@ class Connection
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
         $this->partnerId = $partnerId;
-        $this->maxResponseSizeInBytes = null;
     }
 
     public function client(): Client
