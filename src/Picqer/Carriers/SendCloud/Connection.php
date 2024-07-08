@@ -9,22 +9,14 @@ use Psr\Http\Message\ResponseInterface;
 
 class Connection
 {
-    private $apiUrl = 'https://panel.sendcloud.sc/api/v2/';
-    private $apiKey;
-    private $apiSecret;
-    private $partnerId;
+    private string $apiUrl = 'https://panel.sendcloud.sc/api/v2/';
+    private string $apiKey;
+    private string $apiSecret;
+    private ?string $partnerId = null;
+    private ?int $maxResponseSizeInBytes = null;
 
-    /**
-     * Contains the HTTP client (Guzzle)
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * Array of inserted middleWares
-     * @var array
-     */
-    protected $middleWares = [];
+    private ?Client $client = null;
+    protected array $middleWares = [];
 
     public function __construct(string $apiKey, string $apiSecret, ?string $partnerId = null)
     {
@@ -35,7 +27,7 @@ class Connection
 
     public function client(): Client
     {
-        if ($this->client) {
+        if ($this->client instanceof Client) {
             return $this->client;
         }
 
@@ -63,7 +55,7 @@ class Connection
         return $this->client;
     }
 
-    public function insertMiddleWare($middleWare)
+    public function insertMiddleWare($middleWare): void
     {
         $this->middleWares[] = $middleWare;
     }
@@ -73,13 +65,6 @@ class Connection
         return $this->apiUrl;
     }
 
-    /**
-     * Perform a GET request
-     * @param string $url
-     * @param array $params
-     * @return array
-     * @throws SendCloudApiException
-     */
     public function get($url, $params = []): array
     {
         try {
@@ -94,14 +79,6 @@ class Connection
         }
     }
 
-    /**
-     * Perform a POST request
-     * @param string $url
-     * @param mixed $body
-     * @param array $query
-     * @return array
-     * @throws SendCloudApiException
-     */
     public function post($url, $body, $query = []): array
     {
         try {
@@ -116,14 +93,6 @@ class Connection
         }
     }
 
-    /**
-     * Perform PUT request
-     * @param string $url
-     * @param mixed $body
-     * @param array $query
-     * @return array
-     * @throws SendCloudApiException
-     */
     public function put($url, $body, $query = []): array
     {
         try {
@@ -138,14 +107,7 @@ class Connection
         }
     }
 
-    /**
-     * Perform DELETE request
-     * @param string $url
-     * @param array $query
-     * @return array
-     * @throws SendCloudApiException
-     */
-    public function delete($url, $query = [])
+    public function delete($url, $query = []): array
     {
         try {
             $result = $this->client()->delete($url, ['query' => $query]);
@@ -159,18 +121,20 @@ class Connection
         }
     }
 
-    /**
-     * @param ResponseInterface $response
-     * @return array Parsed JSON result
-     * @throws SendCloudApiException
-     */
-    public function parseResponse(ResponseInterface $response)
+    public function parseResponse(ResponseInterface $response): array
     {
         try {
             // Rewind the response (middlewares might have read it already)
             $response->getBody()->rewind();
 
             $responseBody = $response->getBody()->getContents();
+
+            if (! is_null($this->maxResponseSizeInBytes)) {
+                if (strlen($responseBody) > $this->maxResponseSizeInBytes) {
+                    throw new MaximumResponseSizeException(sprintf('Response size exceeded maximum of %d bytes', $this->maxResponseSizeInBytes));
+                }
+            }
+
             $resultArray = json_decode($responseBody, true);
 
             if (! is_array($resultArray)) {
@@ -196,39 +160,34 @@ class Connection
     }
 
     /**
-     * Returns the selected environment
-     *
-     * @return string
      * @deprecated
      */
-    public function getEnvironment()
+    public function getEnvironment(): string
     {
         return 'live';
     }
 
     /**
-     * Set the environment for the client
-     *
-     * @param string $environment
-     * @throws SendCloudApiException
      * @deprecated
      */
-    public function setEnvironment($environment)
+    public function setEnvironment($environment): void
     {
         if ($environment === 'test') {
             throw new SendCloudApiException('SendCloud test environment is no longer available');
         }
     }
 
-    /**
-     * Download a resource.
-     *
-     * @param string $url
-     * @param array $headers
-     * @return string
-     * @throws SendCloudApiException
-     */
-    public function download($url, array $headers = ['Accept' => 'application/pdf'])
+    public function setMaxResponseSizeInBytes(?int $maxResponseSizeInBytes): void
+    {
+        $this->maxResponseSizeInBytes = $maxResponseSizeInBytes;
+    }
+
+    public function getMaxResponseSizeInBytes(): ?int
+    {
+        return $this->maxResponseSizeInBytes;
+    }
+
+    public function download($url, array $headers = ['Accept' => 'application/pdf']): string
     {
         try {
             $result = $this->client()->get($url, ['headers' => $headers]);
