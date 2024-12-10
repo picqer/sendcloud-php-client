@@ -4,6 +4,7 @@ namespace Picqer\Carriers\SendCloud\Query;
 
 use Picqer\Carriers\SendCloud\Connection;
 use Picqer\Carriers\SendCloud\Model;
+use Picqer\Carriers\SendCloud\SendCloudApiException;
 
 /**
  * Trait FindOne
@@ -14,10 +15,10 @@ use Picqer\Carriers\SendCloud\Model;
  */
 trait FindOne
 {
-
     /**
      * @param $id
      * @return Model|FindOne
+     * @throws SendCloudApiException
      */
     public function find($id)
     {
