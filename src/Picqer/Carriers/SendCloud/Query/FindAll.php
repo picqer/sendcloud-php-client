@@ -13,15 +13,36 @@ use Picqer\Carriers\SendCloud\Connection;
  */
 trait FindAll
 {
-
-    public function all($params = [])
+    public function all($params = [], ?int $maxPages = 1): array
     {
-        $result = $this->connection()->get($this->url, $params);
+        $allRecords = [];
+        $pages = 0;
 
-        return $this->collectionFromResult($result);
+        while (true) {
+            $result = $this->connection()->get($this->url, $params);
+
+            $allRecords = array_merge($allRecords, $this->collectionFromResult($result));
+
+            if (! empty($result['next'])) {
+                // Get the querystring params from the next url, so we can retrieve the next page
+                $params = parse_url($result['next'], PHP_URL_QUERY);
+            } else {
+                // If no next page is found, all records are complete
+                break;
+            }
+
+            $pages++;
+
+            // If max pages is set and reached, also stop the loop
+            if (! is_null($maxPages) && $pages >= $maxPages) {
+                break;
+            }
+        }
+
+        return $allRecords;
     }
 
-    public function collectionFromResult($result)
+    public function collectionFromResult($result): array
     {
         $collection = [];
 
@@ -36,5 +57,4 @@ trait FindAll
 
         return $collection;
     }
-
 }
