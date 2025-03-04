@@ -7,7 +7,10 @@ namespace Picqer\Carriers\SendCloud;
  *
  * @property integer $id
  * @property string $name
+ * @property string $carrier
  * @property float $price
+ * @property string $min_weight
+ * @property string $max_weight
  * @property array $options
  * @property array $countries
  *
