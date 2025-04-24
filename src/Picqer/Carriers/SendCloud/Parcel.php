@@ -9,6 +9,7 @@ namespace Picqer\Carriers\SendCloud;
  * @property string $name
  * @property string $company_name
  * @property string $address
+ * @property string $address_2
  * @property string $house_number
  * @property array $address_divided
  * @property string $city
