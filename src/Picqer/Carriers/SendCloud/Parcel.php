@@ -28,6 +28,9 @@ namespace Picqer\Carriers\SendCloud;
  * @property float $total_order_value
  * @property string $total_order_value_currency
  * @property string $weight
+ * @property string $height
+ * @property string $width
+ * @property string $length
  * @property string $sender_address
  * @property integer $quantity
  *
@@ -61,6 +64,9 @@ class Parcel extends Model
         'telephone',
         'tracking_number',
         'weight',
+        'height',
+        'width',
+        'length',
         'label',
         'customs_declaration',
         'order_number',
