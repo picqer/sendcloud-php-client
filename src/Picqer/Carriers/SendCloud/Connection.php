@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class Connection
 {
-    private string $apiUrl = 'https://panel.sendcloud.sc/api/v2/';
+    private string $apiUrl;
     private string $apiKey;
     private string $apiSecret;
     private ?string $partnerId = null;
@@ -18,11 +18,12 @@ class Connection
     private ?Client $client = null;
     protected array $middleWares = [];
 
-    public function __construct(string $apiKey, string $apiSecret, ?string $partnerId = null)
+    public function __construct(string $apiKey, string $apiSecret, ?string $partnerId = null, $apiUrl = 'https://panel.sendcloud.sc/api/v2/')
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
         $this->partnerId = $partnerId;
+        $this->apiUrl = $apiUrl;
     }
 
     public function client(): Client
