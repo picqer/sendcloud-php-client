@@ -21,11 +21,11 @@ trait FindAll
         while (true) {
             $result = $this->connection()->get($this->url, $params);
 
-            $allRecords = array_merge($allRecords, $this->collectionFromResult($result));
+            $allRecords[] = $this->collectionFromResult($result);
 
             if (! empty($result['next'])) {
                 // Get the querystring params from the next url, so we can retrieve the next page
-                $params = parse_url($result['next'], PHP_URL_QUERY);
+                $params = \parse_url($result['next'], PHP_URL_QUERY);
             } else {
                 // If no next page is found, all records are complete
                 break;
@@ -34,12 +34,12 @@ trait FindAll
             $pages++;
 
             // If max pages is set and reached, also stop the loop
-            if (! is_null($maxPages) && $pages >= $maxPages) {
+            if (null !== $maxPages && $pages >= $maxPages) {
                 break;
             }
         }
 
-        return $allRecords;
+        return \array_merge(...$allRecords);
     }
 
     public function collectionFromResult($result): array
